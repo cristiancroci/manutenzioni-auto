@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manutenzioni Auto</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-512.png">
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>Manutenzioni Auto</h1>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>Nuovo intervento</h2>
+
+      <input id="km" type="number" placeholder="Chilometri" />
+      <input id="costo" type="number" placeholder="Costo totale (€)" />
+      <input id="manodopera" type="number" placeholder="Manodopera (€)" />
+      <input id="ricambi" type="number" placeholder="Ricambi (€)" />
+      <textarea id="descrizione" placeholder="Descrizione intervento"></textarea>
+
+      <button onclick="salva()">Salva</button>
+    </div>
+
+    <div class="card">
+      <h2>Storico interventi</h2>
+      <ul id="lista"></ul>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
