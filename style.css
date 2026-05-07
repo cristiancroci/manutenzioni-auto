@@ -44,11 +44,11 @@ main.layout {
 }
 
 .card {
-  background: rgba(15, 23, 62, 0.95);
+  background: #f4f4f4;
   border-radius: 14px;
   padding: 18px 20px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
-  border: 1px solid #1f2937;
+  border: 10px solid #1f2937;
 }
 
 .card h2 {
@@ -68,9 +68,9 @@ label {
 input, textarea {
   width: 100%;
   padding: 10px 11px;
-  border-radius: 9px;
+  border-radius: 14px;
   border: 1px solid #1f2937;
-  background: #020617;
+  background: #ffffff;
   color: var(--text);
   font-size: 0.9rem;
 }
