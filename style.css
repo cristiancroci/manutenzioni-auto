@@ -21,7 +21,7 @@ body {
 header {
   padding: 20px 24px;
   border-bottom: 1px solid #1f2937;
-  background: #1f372d;
+  background: blue;
   backdrop-filter: blur(10px);
 }
 
@@ -210,7 +210,7 @@ button:hover {
   padding: 4px 10px;
   font-size: 0.75rem;
   border-radius: 999px;
-  background: blu;
+  background: blue;
 }
 
 .riga-note {
