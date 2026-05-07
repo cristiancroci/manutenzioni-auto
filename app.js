@@ -1,3 +1,5 @@
+const API_URL = "https://script.google.com/macros/s/AKfycbz6rQ7tNegXiXyHTB4LzWXJO_y136g4NTIdf2-u4ctjO2svMLzgqBaUfzcp_mHENn8bQg/exec";
+
 const tipoEl = document.getElementById("tipo");
 const dataEl = document.getElementById("data");
 const kmEl = document.getElementById("km");
@@ -12,19 +14,43 @@ const totaleSpesoEl = document.getElementById("totale-speso");
 const statoEl = document.getElementById("stato");
 const ultimoSalvataggioEl = document.getElementById("ultimo-salvataggio");
 
-let interventi = JSON.parse(localStorage.getItem("interventi")) || [];
+let interventi = [];
 
-function formatEuro(v) {
-  const n = Number(v || 0);
-  return n.toFixed(2);
+// -----------------------------
+// CARICAMENTO DA GOOGLE DRIVE
+// -----------------------------
+async function caricaDaDrive() {
+  try {
+    const res = await fetch(API_URL);
+    interventi = await res.json();
+    localStorage.setItem("interventi", JSON.stringify(interventi));
+    mostraLista();
+    aggiornaStato("Dati sincronizzati da Drive");
+  } catch (e) {
+    aggiornaStato("Offline: uso dati locali");
+    interventi = JSON.parse(localStorage.getItem("interventi")) || [];
+    mostraLista();
+  }
 }
 
-function formatData(d) {
-  if (!d) return "—";
-  const [y, m, g] = d.split("-");
-  return `${g}/${m}/${y}`;
+// -----------------------------
+// SALVATAGGIO SU GOOGLE DRIVE
+// -----------------------------
+async function salvaSuDrive() {
+  try {
+    await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify(interventi)
+    });
+    aggiornaStato("Salvato su Drive");
+  } catch (e) {
+    aggiornaStato("Offline: salverò più tardi");
+  }
 }
 
+// -----------------------------
+// FUNZIONI APP
+// -----------------------------
 function salva() {
   const ric = Number(ricambiEl.value || 0);
   const man = Number(manodoperaEl.value || 0);
@@ -43,8 +69,12 @@ function salva() {
 
   interventi.push(nuovo);
   localStorage.setItem("interventi", JSON.stringify(interventi));
-  aggiornaUI("Intervento salvato");
+
+  mostraLista();
+  salvaSuDrive();
+
   pulisciCampi();
+  ultimoSalvataggioEl.textContent = new Date().toLocaleString();
 }
 
 function pulisciCampi() {
@@ -63,17 +93,19 @@ function nuovo() {
 }
 
 function svuotaTutto() {
-  if (!confirm("Vuoi davvero cancellare tutti gli interventi salvati in locale?")) return;
+  if (!confirm("Vuoi davvero cancellare tutto?")) return;
   interventi = [];
-  localStorage.removeItem("interventi");
-  aggiornaUI("Tutti gli interventi sono stati rimossi");
+  localStorage.setItem("interventi", "[]");
+  mostraLista();
+  salvaSuDrive();
 }
 
 function elimina(id) {
   if (!confirm("Eliminare questo intervento?")) return;
   interventi = interventi.filter(i => i.id !== id);
   localStorage.setItem("interventi", JSON.stringify(interventi));
-  aggiornaUI("Intervento eliminato");
+  mostraLista();
+  salvaSuDrive();
 }
 
 function modifica(id) {
@@ -90,18 +122,10 @@ function modifica(id) {
 
   interventi = interventi.filter(x => x.id !== id);
   localStorage.setItem("interventi", JSON.stringify(interventi));
-  aggiornaUI("Modifica in corso (salva per aggiornare)");
-}
-
-function aggiornaUI(msg) {
   mostraLista();
-  aggiornaStato(msg);
-  const ora = new Date();
-  ultimoSalvataggioEl.textContent = ora.toLocaleString();
-}
+  salvaSuDrive();
 
-function aggiornaStato(msg) {
-  statoEl.textContent = msg;
+  aggiornaStato("Modifica in corso");
 }
 
 function mostraLista() {
@@ -114,11 +138,11 @@ function mostraLista() {
     const li = document.createElement("li");
     li.innerHTML = `
       <div class="riga-top">
-        <span>${formatData(i.data)} · ${i.km || "—"} km</span>
+        <span>${formatData(i.data)} · ${i.km} km</span>
         <span class="tag">${i.tipo}</span>
       </div>
       <div class="riga-mid">
-        <strong>${i.titolo || "Senza titolo"}</strong>
+        <strong>${i.titolo}</strong>
       </div>
       <div class="riga-bot">
         <span>Ricambi €${formatEuro(i.ricambi)} · Manodopera €${formatEuro(i.manodopera)} · Totale €${formatEuro(i.totale)}</span>
@@ -136,5 +160,21 @@ function mostraLista() {
   totaleSpesoEl.textContent = formatEuro(totale);
 }
 
-mostraLista();
-aggiornaStato("Pronto");
+function formatEuro(v) {
+  return Number(v || 0).toFixed(2);
+}
+
+function formatData(d) {
+  if (!d) return "—";
+  const [y, m, g] = d.split("-");
+  return `${g}/${m}/${y}`;
+}
+
+function aggiornaStato(msg) {
+  statoEl.textContent = msg;
+}
+
+// -----------------------------
+// AVVIO
+// -----------------------------
+caricaDaDrive();
