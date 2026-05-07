@@ -103,7 +103,7 @@ button {
 }
 
 button.secondary {
-  background: #1f2937;
+  background: red;
   color: var(--muted);
 }
 
