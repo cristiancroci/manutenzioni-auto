@@ -1,3 +1,17 @@
+const tipoEl = document.getElementById("tipo");
+const dataEl = document.getElementById("data");
+const kmEl = document.getElementById("km");
+const ricambiEl = document.getElementById("ricambi");
+const manodoperaEl = document.getElementById("manodopera");
+const titoloEl = document.getElementById("titolo");
+const noteEl = document.getElementById("note");
+
+const listaEl = document.getElementById("lista");
+const conteggioEl = document.getElementById("conteggio");
+const totaleSpesoEl = document.getElementById("totale-speso");
+const statoEl = document.getElementById("stato");
+const ultimoSalvataggioEl = document.getElementById("ultimo-salvataggio");
+
 let interventi = JSON.parse(localStorage.getItem("interventi")) || [];
 
 function formatEuro(v) {
@@ -12,19 +26,19 @@ function formatData(d) {
 }
 
 function salva() {
-  const ric = Number(ricambi.value || 0);
-  const man = Number(manodopera.value || 0);
+  const ric = Number(ricambiEl.value || 0);
+  const man = Number(manodoperaEl.value || 0);
 
   const nuovo = {
     id: Date.now(),
-    tipo: tipo.value || "—",
-    data: data.value || "",
-    km: km.value || "",
+    tipo: tipoEl.value || "—",
+    data: dataEl.value || "",
+    km: kmEl.value || "",
     ricambi: ric,
     manodopera: man,
     totale: ric + man,
-    titolo: titolo.value || "",
-    note: note.value || ""
+    titolo: titoloEl.value || "",
+    note: noteEl.value || ""
   };
 
   interventi.push(nuovo);
@@ -34,13 +48,13 @@ function salva() {
 }
 
 function pulisciCampi() {
-  tipo.value = "";
-  data.value = "";
-  km.value = "";
-  ricambi.value = "";
-  manodopera.value = "";
-  titolo.value = "";
-  note.value = "";
+  tipoEl.value = "";
+  dataEl.value = "";
+  kmEl.value = "";
+  ricambiEl.value = "";
+  manodoperaEl.value = "";
+  titoloEl.value = "";
+  noteEl.value = "";
 }
 
 function nuovo() {
@@ -66,13 +80,13 @@ function modifica(id) {
   const i = interventi.find(x => x.id === id);
   if (!i) return;
 
-  tipo.value = i.tipo;
-  data.value = i.data;
-  km.value = i.km;
-  ricambi.value = i.ricambi;
-  manodopera.value = i.manodopera;
-  titolo.value = i.titolo;
-  note.value = i.note;
+  tipoEl.value = i.tipo;
+  dataEl.value = i.data;
+  kmEl.value = i.km;
+  ricambiEl.value = i.ricambi;
+  manodoperaEl.value = i.manodopera;
+  titoloEl.value = i.titolo;
+  noteEl.value = i.note;
 
   interventi = interventi.filter(x => x.id !== id);
   localStorage.setItem("interventi", JSON.stringify(interventi));
@@ -83,22 +97,21 @@ function aggiornaUI(msg) {
   mostraLista();
   aggiornaStato(msg);
   const ora = new Date();
-  ultimo-salvataggio.textContent = ora.toLocaleString();
+  ultimoSalvataggioEl.textContent = ora.toLocaleString();
 }
 
 function aggiornaStato(msg) {
-  stato.textContent = msg;
+  statoEl.textContent = msg;
 }
 
 function mostraLista() {
-  lista.innerHTML = "";
+  listaEl.innerHTML = "";
   let totale = 0;
 
   interventi.forEach((i) => {
     totale += i.totale;
 
     const li = document.createElement("li");
-
     li.innerHTML = `
       <div class="riga-top">
         <span>${formatData(i.data)} · ${i.km || "—"} km</span>
@@ -116,12 +129,11 @@ function mostraLista() {
       </div>
       ${i.note ? `<div class="riga-note">${i.note}</div>` : ""}
     `;
-
-    lista.appendChild(li);
+    listaEl.appendChild(li);
   });
 
-  conteggio.textContent = `${interventi.length} interventi`;
-  totale.textContent = formatEuro(totale);
+  conteggioEl.textContent = `${interventi.length} interventi`;
+  totaleSpesoEl.textContent = formatEuro(totale);
 }
 
 mostraLista();
