@@ -1,5 +1,5 @@
 :root {
-  --bg: #f2f3f5;
+  --bg: #lightgrey;
   --panel: #e6eef8;
   --text: #0f172a;
   --muted: #94a3b8;
@@ -134,11 +134,11 @@ button:hover {
 }
 
 .totale-box {
-  background: #007ba7;
+  background: green;
   border-radius: 12px;
   padding: 12px 14px;
   margin-bottom: 14px;
-  border: 1px solid #1f2937;
+  border: 1px solid purple;
 }
 
 .totale-box div:first-child {
