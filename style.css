@@ -13,8 +13,8 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: radial-gradient(circle at centre, #f2f3f5 0, #020617 90%);
+  font-family: "Roboto", sans-serif;
+  background: radial-gradient(circle at centre, #f2f3f5 0, #020617 40%);
   color: var(--text);
 }
 
