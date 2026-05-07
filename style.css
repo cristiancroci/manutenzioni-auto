@@ -213,6 +213,12 @@ button:hover {
   background: #111827;
 }
 
+.riga-note {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
 @media (max-width: 900px) {
   main.layout {
     grid-template-columns: 1fr;
