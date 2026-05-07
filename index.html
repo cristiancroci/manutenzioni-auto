@@ -12,7 +12,7 @@
   <!-- REGISTRAZIONE SERVICE WORKER + NOTIFICA AGGIORNAMENTO -->
   <script>
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("service-worker.js").then(reg => {
+      navigator.serviceWorker.register("serviceworker.js").then(reg => {
         reg.addEventListener("updatefound", () => {
           const newWorker = reg.installing;
           newWorker.addEventListener("statechange", () => {
