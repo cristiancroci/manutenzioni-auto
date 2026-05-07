@@ -21,7 +21,7 @@ body {
 header {
   padding: 20px 24px;
   border-bottom: 1px solid #1f2937;
-  background: rgba(60, 179, 113, 0.9);
+  background: #1f2937;
   backdrop-filter: blur(10px);
 }
 
