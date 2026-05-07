@@ -134,11 +134,11 @@ button:hover {
 }
 
 .totale-box {
-  background: c0c0c0;
+  background: #c0c0c0;
   border-radius: 12px;
   padding: 12px 14px;
-  margin-bottom: 14px;
-  border: 10px solid white;
+  margin-bottom: 5px;
+  border: 10px yellow;
 }
 
 .totale-box div:first-child {
