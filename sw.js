@@ -14,19 +14,17 @@ async function generateCacheName() {
       const response = await fetch(file + "?v=" + Date.now());
       const text = await response.text();
       content += text;
-    } catch (e) {
-      console.error("Errore nel leggere:", file);
-    }
+    } catch (e) {}
   }
 
   const hashBuffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(content));
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 
-  return "manutenzioni-auto-" + hashHex.substring(0, 12);
+  return "cache-" + hashHex.substring(0, 12);
 }
 
-let CACHE_NAME = "manutenzioni-auto-default";
+let CACHE_NAME = "cache-default";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -49,28 +47,24 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
             return caches.delete(key);
           }
         })
-      )
-    )
+      );
+      await self.clients.claim();
+    })()
   );
-  self.clients.claim();
 });
 
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((cached) => {
-      return (
-        cached ||
-        fetch(event.request).then((response) => {
-          return response;
-        })
-      );
+      return cached || fetch(event.request);
     })
   );
 });
