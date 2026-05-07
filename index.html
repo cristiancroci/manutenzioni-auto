@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manutenzioni Auto</title>
+
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
 </head>
@@ -43,29 +44,37 @@
 
   <script src="app.js"></script>
 
+  <!-- SERVICE WORKER -->
   <script>
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("service-worker.js").then(reg => {
+
+      navigator.serviceWorker.register("sw.js").then(reg => {
+
+        // Quando viene trovata una nuova versione
         reg.addEventListener("updatefound", () => {
           const newWorker = reg.installing;
+
           newWorker.addEventListener("statechange", () => {
             if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
               document.getElementById("update-banner").style.display = "flex";
             }
           });
         });
-      });
 
-      document.getElementById("update-btn").addEventListener("click", () => {
-        navigator.serviceWorker.getRegistration().then(reg => {
+        // Quando clicchi "Aggiorna"
+        document.getElementById("update-btn").addEventListener("click", () => {
           if (reg.waiting) {
             reg.waiting.postMessage("skipWaiting");
           }
         });
+
       });
 
+      // Quando il nuovo SW prende il controllo → ricarica la PWA
       navigator.serviceWorker.addEventListener("controllerchange", () => {
-        location.reload();
+        setTimeout(() => {
+          location.reload();
+        }, 300);
       });
     }
   </script>
