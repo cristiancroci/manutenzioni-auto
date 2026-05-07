@@ -7,14 +7,13 @@
 
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon-512.png">
+  <link rel="stylesheet" href="style.css">
 
   <script>
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js");
     }
   </script>
-
-  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -25,13 +24,11 @@
   <main>
     <div class="card">
       <h2>Nuovo intervento</h2>
-
       <input id="km" type="number" placeholder="Chilometri" />
       <input id="costo" type="number" placeholder="Costo totale (€)" />
       <input id="manodopera" type="number" placeholder="Manodopera (€)" />
       <input id="ricambi" type="number" placeholder="Ricambi (€)" />
       <textarea id="descrizione" placeholder="Descrizione intervento"></textarea>
-
       <button onclick="salva()">Salva</button>
     </div>
 
