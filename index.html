@@ -1,74 +1,27 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manutenzioni Auto</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
-</head>
-
-<body>
-
-  <header>
-    <h1>Manutenzioni Auto</h1>
-  </header>
-
-  <div class="card">
-    <label>Tipo intervento</label>
-    <input id="tipo" type="text">
-
-    <label>Km</label>
-    <input id="km" type="number">
-
-    <label>Costo pezzi</label>
-    <input id="costoPezzi" type="number">
-
-    <label>Costo manodopera</label>
-    <input id="costoManodopera" type="number">
-
-    <label>Note</label>
-    <textarea id="note"></textarea>
-
-    <button onclick="salvaIntervento()">Salva</button>
-  </div>
-
-  <ul id="lista" class="lista-interventi"></ul>
-
-  <!-- BANNER DI AGGIORNAMENTO -->
-  <div id="update-banner">
-    Nuova versione disponibile
-    <button id="update-btn">Aggiorna</button>
-  </div>
-
-  <script src="app.js"></script>
-
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("service-worker.js").then(reg => {
-        reg.addEventListener("updatefound", () => {
-          const newWorker = reg.installing;
-          newWorker.addEventListener("statechange", () => {
-            if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
-              document.getElementById("update-banner").style.display = "flex";
-            }
-          });
-        });
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js").then(reg => {
+    
+    reg.addEventListener("updatefound", () => {
+      const newWorker = reg.installing;
+      newWorker.addEventListener("statechange", () => {
+        if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+          document.getElementById("update-banner").style.display = "flex";
+        }
       });
+    });
 
-      document.getElementById("update-btn").addEventListener("click", () => {
-        navigator.serviceWorker.getRegistration().then(reg => {
-          if (reg.waiting) {
-            reg.waiting.postMessage("skipWaiting");
-          }
-        });
-      });
+    document.getElementById("update-btn").addEventListener("click", () => {
+      if (reg.waiting) {
+        reg.waiting.postMessage("skipWaiting");
+      }
+    });
+  });
 
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
-        location.reload();
-      });
-    }
-  </script>
-
-</body>
-</html>
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    setTimeout(() => {
+      location.reload();
+    }, 300);
+  });
+}
+</script>
