@@ -147,8 +147,8 @@ function mostraLista() {
       <div class="riga-bot">
         <span>Ricambi €${formatEuro(i.ricambi)} · Manodopera €${formatEuro(i.manodopera)} · Totale €${formatEuro(i.totale)}</span>
         <div class="azioni">
-          <button onclick="modifica(${i.id})">Modifica</button>
-          <button onclick="elimina(${i.id})">Elimina</button>
+          <button onclick="modifica(${i.id})">✏️Modifica</button>
+          <button onclick="elimina(${i.id})">🗑️Elimina</button>
         </div>
       </div>
       ${i.note ? `<div class="riga-note">${i.note}</div>` : ""}
