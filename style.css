@@ -26,6 +26,7 @@ header {
   background-size: 300% 300%;
   animation: cangiante 8s ease infinite;
   backdrop-filter: blur(10px);
+  color: black;
 }
 
 header h1 {
