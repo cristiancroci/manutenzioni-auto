@@ -146,12 +146,16 @@ button:hover {
   color: white;
 }
 
+/* ❄️ TOTALE SPESO — CANGIANTE BIANCO GHIACCIO */
 .totale-box {
-  background: #c0c0c0;
+  background: linear-gradient(45deg, #ffffff, #e6f7ff, #d0eaff);
+  background-size: 300% 300%;
+  animation: ghiaccio 10s ease infinite;
   border-radius: 12px;
   padding: 12px 14px;
   margin-bottom: 5px;
-  border: 15x giallo;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4),
+              0 0 18px rgba(200, 230, 255, 0.3);
 }
 
 .totale-box div:first-child {
@@ -232,8 +236,15 @@ button:hover {
   color: var(--muted);
 }
 
-/* 🔥 ANIMAZIONE CANGIANTE (USATA DA HEADER, SALVA, SVUOTA) */
+/* 🔥 ANIMAZIONE CANGIANTE */
 @keyframes cangiante {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ❄️ ANIMAZIONE GHIACCIO */
+@keyframes ghiaccio {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
