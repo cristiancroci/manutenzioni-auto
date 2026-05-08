@@ -102,9 +102,14 @@ button {
   color: white;
 }
 
+/* 🔥 BOTTONE SVUOTA — CANGIANTE + GLOW */
 button.secondary {
-  background: red;
+  background: linear-gradient(45deg, #ff0080, #00eaff, #ff9900);
+  background-size: 300% 300%;
+  animation: cangiante 6s ease infinite;
   color: white;
+  box-shadow: 0 0 12px rgba(255, 0, 128, 0.6),
+              0 0 18px rgba(0, 234, 255, 0.4);
 }
 
 button:hover {
@@ -217,6 +222,13 @@ button:hover {
   margin-top: 4px;
   font-size: 0.8rem;
   color: var(--muted);
+}
+
+/* 🔥 ANIMAZIONE CANGIANTE */
+@keyframes cangiante {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @media (max-width: 900px) {
