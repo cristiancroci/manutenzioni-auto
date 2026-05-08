@@ -92,14 +92,6 @@ function nuovo() {
   aggiornaStato("Nuovo intervento");
 }
 
-function svuotaTutto() {
-  if (!confirm("Vuoi davvero cancellare tutto?")) return;
-  interventi = [];
-  localStorage.setItem("interventi", "[]");
-  mostraLista();
-  salvaSuDrive();
-}
-
 function elimina(id) {
   if (!confirm("Eliminare questo intervento?")) return;
   interventi = interventi.filter(i => i.id !== id);
