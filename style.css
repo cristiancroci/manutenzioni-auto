@@ -18,10 +18,13 @@ body {
   color: var(--text);
 }
 
+/* 🔥 HEADER CANGIANTE ROSSO */
 header {
   padding: 20px 24px;
   border-bottom: 1px solid #1f2937;
-  background: blue;
+  background: linear-gradient(45deg, #ff0040, #ff006e, #ff2e00);
+  background-size: 300% 300%;
+  animation: cangiante 8s ease infinite;
   backdrop-filter: blur(10px);
 }
 
@@ -92,17 +95,22 @@ textarea {
   margin-top: 14px;
 }
 
+/* 🔥 BOTTONE SALVA — CANGIANTE ROSSO + GLOW */
 button {
   border: none;
   border-radius: 999px;
   padding: 9px 16px;
   font-size: 0.9rem;
   cursor: pointer;
-  background: var(--accent);
+  background: linear-gradient(45deg, #ff0000, #ff4d00, #ff0066);
+  background-size: 300% 300%;
+  animation: cangiante 6s ease infinite;
   color: white;
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.6),
+              0 0 18px rgba(255, 77, 0, 0.4);
 }
 
-/* 🔥 BOTTONE SVUOTA — CANGIANTE + GLOW */
+/* 🔥 BOTTONE SVUOTA — CANGIANTE MULTICOLORE + GLOW */
 button.secondary {
   background: linear-gradient(45deg, #ff0080, #00eaff, #ff9900);
   background-size: 300% 300%;
@@ -224,7 +232,7 @@ button:hover {
   color: var(--muted);
 }
 
-/* 🔥 ANIMAZIONE CANGIANTE */
+/* 🔥 ANIMAZIONE CANGIANTE (USATA DA HEADER, SALVA, SVUOTA) */
 @keyframes cangiante {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
