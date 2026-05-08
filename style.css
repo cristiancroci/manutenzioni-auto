@@ -227,7 +227,7 @@ button:hover {
   padding: 4px 10px;
   font-size: 0.75rem;
   border-radius: 999px;
-  background: linear-gradient(90deg, #b8c7d9, #9fb4c9, #8aa3bb);
+  background: linear-gradient(90deg, #ffc26c, #ffb444, #ffa500);
   background-size: 300% 300%;
   animation: cangiante 6s ease infinite;
 }
